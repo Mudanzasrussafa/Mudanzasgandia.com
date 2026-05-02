@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+/* =========================================================
+   Mudanzas Gandia — Design Tokens
+   Paleta y tipografía heredadas del manual de marca Russafa.
+   ========================================================= */
+
+@theme {
+  /* Paleta Russafa */
+  --color-russafa-lime: #b5e33d;
+  --color-russafa-lime-bright: #c4f23e;
+  --color-russafa-dark: #0e3b36;
+  --color-russafa-dark-deep: #082522;
+  --color-russafa-yellow: #ffe800;
+  --color-russafa-cream: #f4f1e8;
+  --color-russafa-black: #0a1715;
+  --color-russafa-gray: #6b7574;
+
+  /* Tipografía */
+  --font-display: "Doing", system-ui, sans-serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+
+  /* Radios */
+  --radius-russafa: 0.75rem;
+
+  /* Sombras */
+  --shadow-russafa-card: 0 20px 40px -20px rgba(14, 59, 54, 0.25);
+  --shadow-russafa-glow: 0 0 0 1px rgba(181, 227, 61, 0.3), 0 12px 32px -8px rgba(181, 227, 61, 0.4);
+}
+
+/* =========================================================
+   Base layer
+   ========================================================= */
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-russafa-cream);
+  color: var(--color-russafa-black);
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: var(--color-russafa-lime);
+  color: var(--color-russafa-dark);
+}
+
+/* Display font utilities */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.font-display-tight {
+  font-family: var(--font-display);
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+}
+
+/* Marquee infinita para banner superior */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+/* Reveal sutil al cargar */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-rise-delay-1 { animation-delay: 0.1s; }
+.animate-rise-delay-2 { animation-delay: 0.2s; }
+.animate-rise-delay-3 { animation-delay: 0.3s; }
+.animate-rise-delay-4 { animation-delay: 0.4s; }
+
+/* Patrón de fondo: micro-grid sutil */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(14, 59, 54, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 59, 54, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bg-grid-dark {
+  background-image:
+    linear-gradient(to right, rgba(181, 227, 61, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(181, 227, 61, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Grano para textura */
+.bg-noise {
+  position: relative;
+}
+.bg-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+/* Botón base reusable */
+.btn-russafa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-russafa-primary {
+  background: var(--color-russafa-lime);
+  color: var(--color-russafa-dark);
+}
+.btn-russafa-primary:hover {
+  background: var(--color-russafa-lime-bright);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-russafa-glow);
+}
+
+.btn-russafa-dark {
+  background: var(--color-russafa-dark);
+  color: var(--color-russafa-cream);
+}
+.btn-russafa-dark:hover {
+  background: var(--color-russafa-dark-deep);
+  transform: translateY(-2px);
+}
+
+.btn-russafa-ghost {
+  background: transparent;
+  color: var(--color-russafa-cream);
+  border: 1.5px solid rgba(244, 241, 232, 0.3);
+}
+.btn-russafa-ghost:hover {
+  border-color: var(--color-russafa-lime);
+  color: var(--color-russafa-lime);
+}
+
+/* Focus visible accesible */
+:focus-visible {
+  outline: 2px solid var(--color-russafa-lime);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
