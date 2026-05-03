@@ -19,11 +19,10 @@ export default function MobileMenu() {
 
   return (
     <>
-      {/* Botón hamburguesa - solo visible en móvil/tablet */}
       <button
         onClick={() => setOpen(true)}
         className="lg:hidden flex items-center justify-center w-11 h-11 rounded-xl text-russafa-pacific hover:bg-russafa-pacific/5 transition-colors"
-        aria-label="Abrir menú"
+        aria-label="Abrir menu"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -43,31 +42,29 @@ export default function MobileMenu() {
         </svg>
       </button>
 
-      {/* Overlay oscuro de fondo */}
-      {open && (
+      {open ? (
         <div
           className="fixed inset-0 bg-russafa-pacific/60 backdrop-blur-sm z-50 lg:hidden"
           onClick={close}
           aria-hidden="true"
         />
-      )}
+      ) : null}
 
-      {/* Panel del menú deslizante */}
       <aside
-        className={`fixed top-0 right-0 bottom-0 w-[88%] max-w-sm bg-russafa-cream z-50 lg:hidden shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={
+          "fixed top-0 right-0 bottom-0 w-[88%] max-w-sm bg-russafa-cream z-50 lg:hidden shadow-2xl transition-transform duration-300 ease-out flex flex-col " +
+          (open ? "translate-x-0" : "translate-x-full")
+        }
         aria-hidden={!open}
       >
-        {/* Cabecera del menú con botón cerrar */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-russafa-pacific/10">
           <span className="text-sm font-bold uppercase tracking-widest text-russafa-pacific">
-            Menú
+            Menu
           </span>
           <button
             onClick={close}
             className="flex items-center justify-center w-10 h-10 rounded-xl text-russafa-pacific hover:bg-russafa-pacific/5 transition-colors"
-            aria-label="Cerrar menú"
+            aria-label="Cerrar menu"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -87,9 +84,7 @@ export default function MobileMenu() {
           </button>
         </div>
 
-        {/* Lista de enlaces - scrollable */}
         <nav className="flex-1 overflow-y-auto px-3 py-3">
-          {/* Servicios con submenú */}
           <button
             onClick={() => setServiciosOpen(!serviciosOpen)}
             className="w-full flex items-center justify-between px-3 py-3.5 rounded-xl text-base font-semibold text-russafa-pacific hover:bg-russafa-pacific/5 transition-colors"
@@ -97,29 +92,28 @@ export default function MobileMenu() {
             <span>Servicios</span>
             <svg
               viewBox="0 0 12 12"
-              className={`w-3 h-3 transition-transform ${serviciosOpen ? "rotate-180" : ""}`}
+              className={"w-3 h-3 transition-transform " + (serviciosOpen ? "rotate-180" : "")}
               fill="currentColor"
               aria-hidden="true"
             >
               <path d="M6 9L2 4h8z" />
             </svg>
           </button>
-          {serviciosOpen && (
+          {serviciosOpen ? (
             <div className="pl-3 pb-2 space-y-0.5">
               {SERVICES.map((s) => (
                 <Link
                   key={s.slug}
-                  href={`/servicios/${s.slug}`}
+                  href={"/servicios/" + s.slug}
                   onClick={close}
-                  className="block px-3 py-2.5 rounded-lg text-sm text-russafa-pacific/80 hover:bg-russafa-pacific/5 hover:text-russafa-vibrant transition-colors"
+                  className="block px-3 py-2.5 rounded-lg text-sm text-russafa-pacific hover:bg-russafa-pacific/5 hover:text-russafa-vibrant transition-colors"
                 >
                   {s.shortTitle}
                 </Link>
               ))}
             </div>
-          )}
+          ) : null}
 
-          {/* Mudanzas locales con submenú */}
           <button
             onClick={() => setZonasOpen(!zonasOpen)}
             className="w-full flex items-center justify-between px-3 py-3.5 rounded-xl text-base font-semibold text-russafa-pacific hover:bg-russafa-pacific/5 transition-colors"
@@ -127,29 +121,28 @@ export default function MobileMenu() {
             <span>Mudanzas locales</span>
             <svg
               viewBox="0 0 12 12"
-              className={`w-3 h-3 transition-transform ${zonasOpen ? "rotate-180" : ""}`}
+              className={"w-3 h-3 transition-transform " + (zonasOpen ? "rotate-180" : "")}
               fill="currentColor"
               aria-hidden="true"
             >
               <path d="M6 9L2 4h8z" />
             </svg>
           </button>
-          {zonasOpen && (
+          {zonasOpen ? (
             <div className="pl-3 pb-2 space-y-0.5">
               {ZONES.map((z) => (
                 <Link
                   key={z.slug}
-                  href={`/mudanzas-${z.slug}`}
+                  href={"/mudanzas-" + z.slug}
                   onClick={close}
-                  className="block px-3 py-2.5 rounded-lg text-sm text-russafa-pacific/80 hover:bg-russafa-pacific/5 hover:text-russafa-vibrant transition-colors"
+                  className="block px-3 py-2.5 rounded-lg text-sm text-russafa-pacific hover:bg-russafa-pacific/5 hover:text-russafa-vibrant transition-colors"
                 >
                   Mudanzas {z.name}
                 </Link>
               ))}
             </div>
-          )}
+          ) : null}
 
-          {/* Enlaces simples */}
           <Link
             href="/#zonas"
             onClick={close}
@@ -162,7 +155,7 @@ export default function MobileMenu() {
             onClick={close}
             className="block px-3 py-3.5 rounded-xl text-base font-semibold text-russafa-pacific hover:bg-russafa-pacific/5 transition-colors"
           >
-            Cómo trabajamos
+            Como trabajamos
           </Link>
           <Link
             href="/#contacto"
@@ -173,7 +166,6 @@ export default function MobileMenu() {
           </Link>
         </nav>
 
-        {/* Footer del menú con CTAs */}
         <div className="border-t border-russafa-pacific/10 p-4 space-y-2.5 bg-white">
           <Link
             href="/#contacto"
@@ -181,7 +173,6 @@ export default function MobileMenu() {
             className="btn-russafa btn-russafa-primary w-full justify-center"
           >
             Pedir presupuesto
-            <span aria-hidden="true">→</span>
           </Link>
 
           <div className="grid grid-cols-2 gap-2">
@@ -229,8 +220,8 @@ export default function MobileMenu() {
             href={buildPhoneUrl()}
             className="block text-center pt-1"
           >
-            <span className="text-[10px] font-bold uppercase tracking-widest text-russafa-gray">
-              Llámanos
+            <span className="text-[10px] font-bold uppercase tracking-widest text-russafa-pacific">
+              Llamanos
             </span>
             <div className="text-russafa-pacific font-bold">{SITE.phone}</div>
           </a>
