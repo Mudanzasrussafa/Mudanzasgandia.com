@@ -4,6 +4,16 @@ import { SERVICES } from "@/data/services";
 import { ZONES } from "@/data/zones";
 import { SITE, buildPhoneUrl, buildWhatsappUrl } from "@/lib/site-config";
 import BudgetForm from "@/components/BudgetForm";
+import {
+  LassoLeg,
+  LassoStair,
+  LassoArm,
+  LassoBox,
+  LassoTruck,
+  LassoShield,
+  LassoClock,
+  LassoStar,
+} from "@/components/RussafaIcons";
 
 export const metadata: Metadata = {
   title: "Mudanzas Gandia · Empresa de mudanzas y guardamuebles en La Safor",
@@ -24,21 +34,48 @@ const PROCESS_STEPS = [
     n: "01",
     title: "Hablamos",
     text: "Llámanos o pídenos presupuesto. Escuchamos qué necesitas y te asesoramos sin compromiso.",
+    Icon: LassoArm,
   },
   {
     n: "02",
     title: "Visita y presupuesto",
     text: "Si hace falta, vamos a tu casa a ver el volumen. Te damos un precio cerrado por escrito.",
+    Icon: LassoBox,
   },
   {
     n: "03",
     title: "Embalaje y traslado",
     text: "Llegamos puntuales. Embalamos, desmontamos, trasladamos y montamos en destino.",
+    Icon: LassoTruck,
   },
   {
     n: "04",
     title: "Tu siguiente paso",
     text: "Te entregamos todo colocado y listo. Empieza tu nueva etapa sin haberte preocupado por nada.",
+    Icon: LassoStair,
+  },
+];
+
+const WHY_US = [
+  {
+    title: "Presupuesto cerrado",
+    text: "Lo que decimos es lo que pagas. Sin extras de última hora ni sorpresas.",
+    Icon: LassoShield,
+  },
+  {
+    title: "Equipo propio",
+    text: "Operarios con formación específica en mudanzas. Nada de subcontratas.",
+    Icon: LassoArm,
+  },
+  {
+    title: "Seguro incluido",
+    text: "Responsabilidad civil y seguro de mercancías incluido en cada servicio.",
+    Icon: LassoBox,
+  },
+  {
+    title: "Acompañamiento",
+    text: "Un único interlocutor desde el primer contacto hasta el último mueble.",
+    Icon: LassoClock,
   },
 ];
 
@@ -92,26 +129,29 @@ const FAQS = [
   },
 ];
 
+// Iconos rotando para servicios
+const SERVICE_ICONS = [LassoTruck, LassoBox, LassoArm, LassoShield, LassoStair, LassoBox];
+
 export default function Home() {
   return (
     <>
       {/* ────────────────────────────── HERO ────────────────────────────── */}
-      <section className="relative overflow-hidden bg-russafa-dark text-russafa-cream bg-noise">
+      <section className="relative overflow-hidden bg-russafa-pacific text-russafa-cream bg-noise">
         <div className="absolute inset-0 bg-grid-dark opacity-40" />
-        {/* R gigante decorativa */}
+
+        {/* R isotipo gigante decorativa */}
         <div
           aria-hidden="true"
-          className="absolute -right-32 -top-20 lg:-right-20 lg:-top-10 text-[28rem] lg:text-[40rem] leading-none font-display text-russafa-lime/10 select-none pointer-events-none"
+          className="absolute -right-32 -top-20 lg:-right-20 lg:-top-10 text-[28rem] lg:text-[40rem] leading-none font-display text-russafa-vibrant/8 select-none pointer-events-none"
         >
           R
         </div>
-        {/* Halo lime */}
-        <div className="absolute top-1/2 -left-48 w-96 h-96 rounded-full bg-russafa-lime/15 blur-[120px]" />
+        <div className="absolute top-1/2 -left-48 w-96 h-96 rounded-full bg-russafa-high/15 blur-[120px]" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 pt-20 pb-28 lg:pt-32 lg:pb-40">
           <div className="max-w-4xl">
-            <p className="animate-rise inline-flex items-center gap-2 rounded-full border border-russafa-lime/30 bg-russafa-lime/5 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-russafa-lime">
-              <span className="w-1.5 h-1.5 rounded-full bg-russafa-lime animate-pulse" />
+            <p className="animate-rise inline-flex items-center gap-2 rounded-full border border-russafa-high/30 bg-russafa-high/5 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-russafa-high">
+              <span className="w-1.5 h-1.5 rounded-full bg-russafa-high animate-pulse" />
               Mudanzas en Gandia y La Safor
             </p>
 
@@ -119,7 +159,7 @@ export default function Home() {
               Tu siguiente
               <br />
               paso en{" "}
-              <span className="relative inline-block text-russafa-lime">
+              <span className="relative inline-block text-russafa-high">
                 Gandia
                 <svg
                   viewBox="0 0 200 12"
@@ -139,8 +179,8 @@ export default function Home() {
             </h1>
 
             <p className="animate-rise animate-rise-delay-2 mt-8 max-w-2xl text-lg lg:text-xl text-russafa-cream/80 leading-relaxed">
-              No solo trasladamos cajas. Hacemos que mudarte sea fácil, seguro y sin sorpresas. Con
-              presupuesto cerrado, equipo profesional y la confianza de Mudanzas Russafa.
+              No solo trasladamos cajas. Te acompañamos en el cambio. Con presupuesto
+              cerrado, equipo profesional y la confianza de Mudanzas Russafa.
             </p>
 
             <div className="animate-rise animate-rise-delay-3 mt-10 flex flex-wrap gap-3">
@@ -153,11 +193,16 @@ export default function Home() {
               </a>
             </div>
 
+            {/* Iconos lasso decorativos en el hero */}
+            <div className="hidden lg:flex absolute right-12 bottom-32 gap-8 text-russafa-high/30">
+              <LassoLeg className="w-32 h-32 animate-rise animate-rise-delay-4" />
+            </div>
+
             {/* Stats inline */}
             <dl className="animate-rise animate-rise-delay-4 mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 max-w-3xl">
               {STATS.map((s) => (
-                <div key={s.label} className="border-l-2 border-russafa-lime pl-4">
-                  <dt className="font-display text-3xl lg:text-5xl text-russafa-lime">{s.value}</dt>
+                <div key={s.label} className="border-l-2 border-russafa-high pl-4">
+                  <dt className="font-display text-3xl lg:text-5xl text-russafa-high">{s.value}</dt>
                   <dd className="mt-1 text-xs lg:text-sm text-russafa-cream/60 uppercase tracking-wider">
                     {s.label}
                   </dd>
@@ -167,7 +212,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Wave divisor */}
         <svg
           viewBox="0 0 1440 60"
           className="block w-full h-12 text-russafa-cream"
@@ -183,13 +227,13 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-lime-bright mb-4 inline-flex items-center gap-2">
-                <span className="w-8 h-px bg-russafa-dark/30" />
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4 inline-flex items-center gap-2">
+                <span className="w-8 h-px bg-russafa-pacific/30" />
                 Lo que hacemos
               </p>
-              <h2 className="font-display-tight text-5xl lg:text-7xl text-russafa-dark max-w-2xl">
+              <h2 className="font-display-tight text-5xl lg:text-7xl text-russafa-pacific max-w-2xl">
                 Servicios completos para
-                <span className="text-russafa-lime"> mudarte sin estrés</span>
+                <span className="text-russafa-vibrant"> mudarte sin estrés</span>
               </h2>
             </div>
             <p className="text-russafa-gray max-w-md">
@@ -199,68 +243,60 @@ export default function Home() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {SERVICES.map((s, i) => (
-              <Link
-                key={s.slug}
-                href={`/servicios/${s.slug}`}
-                className="group relative overflow-hidden rounded-3xl bg-white border border-russafa-dark/8 p-8 hover:border-russafa-lime hover:shadow-[0_24px_60px_-20px_rgba(14,59,54,0.25)] transition-all duration-300"
-              >
-                <div className="absolute top-6 right-6 font-display text-5xl text-russafa-cream group-hover:text-russafa-lime transition-colors duration-300">
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-                <h3 className="font-display text-3xl text-russafa-dark mb-3 max-w-[80%] leading-tight">
-                  {s.shortTitle}
-                </h3>
-                <p className="text-russafa-gray text-sm leading-relaxed mb-6">{s.description}</p>
-                <span className="inline-flex items-center gap-2 text-sm font-bold text-russafa-dark group-hover:text-russafa-lime-bright transition-colors">
-                  Ver más
-                  <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">
-                    →
+            {SERVICES.map((s, i) => {
+              const Icon = SERVICE_ICONS[i] ?? LassoBox;
+              return (
+                <Link
+                  key={s.slug}
+                  href={`/servicios/${s.slug}`}
+                  className="group relative overflow-hidden rounded-3xl bg-white border border-russafa-pacific/8 p-8 hover:border-russafa-vibrant hover:shadow-[0_24px_60px_-20px_rgba(2,64,61,0.25)] transition-all duration-300"
+                >
+                  <div className="absolute top-6 right-6 w-16 h-16 text-russafa-pacific/15 group-hover:text-russafa-vibrant transition-colors duration-300">
+                    <Icon className="w-full h-full" />
+                  </div>
+                  <div className="absolute top-6 left-6 font-display text-3xl text-russafa-cream group-hover:text-russafa-high transition-colors duration-300">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <h3 className="font-display text-3xl text-russafa-pacific mb-3 mt-20 max-w-[80%] leading-tight">
+                    {s.shortTitle}
+                  </h3>
+                  <p className="text-russafa-gray text-sm leading-relaxed mb-6">{s.description}</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-bold text-russafa-pacific group-hover:text-russafa-vibrant transition-colors">
+                    Ver más
+                    <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">
+                      →
+                    </span>
                   </span>
-                </span>
-                <div className="absolute -bottom-1 left-0 h-1 w-0 bg-russafa-lime group-hover:w-full transition-all duration-500" />
-              </Link>
-            ))}
+                  <div className="absolute -bottom-1 left-0 h-1 w-0 bg-russafa-vibrant group-hover:w-full transition-all duration-500" />
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* ────────────────────────────── POR QUÉ NOSOTROS ────────────────────────────── */}
-      <section className="py-24 lg:py-32 bg-russafa-dark text-russafa-cream relative overflow-hidden bg-noise">
+      <section className="py-24 lg:py-32 bg-russafa-pacific text-russafa-cream relative overflow-hidden bg-noise">
         <div className="absolute inset-0 bg-grid-dark opacity-30" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="max-w-3xl mb-16">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-lime mb-4">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-high mb-4">
               Por qué Russafa
             </p>
             <h2 className="font-display-tight text-5xl lg:text-7xl">
               Cuidamos tu mudanza
               <br />
-              <span className="text-russafa-lime">como cuidamos la nuestra.</span>
+              <span className="text-russafa-high">como cuidamos la nuestra.</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-russafa-lime/15 rounded-3xl overflow-hidden">
-            {[
-              {
-                title: "Presupuesto cerrado",
-                text: "Lo que decimos es lo que pagas. Sin extras de última hora ni sorpresas.",
-              },
-              {
-                title: "Equipo propio",
-                text: "Operarios con formación específica en mudanzas. Nada de subcontratas.",
-              },
-              {
-                title: "Seguro incluido",
-                text: "Responsabilidad civil y seguro de mercancías incluido en cada servicio.",
-              },
-              {
-                title: "Acompañamiento",
-                text: "Un único interlocutor desde el primer contacto hasta el último mueble.",
-              },
-            ].map((p) => (
-              <div key={p.title} className="bg-russafa-dark p-8 lg:p-10">
-                <h3 className="font-display text-2xl text-russafa-lime mb-3">{p.title}</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-russafa-high/15 rounded-3xl overflow-hidden">
+            {WHY_US.map((p) => (
+              <div key={p.title} className="bg-russafa-pacific p-8 lg:p-10">
+                <div className="w-14 h-14 mb-6 text-russafa-high">
+                  <p.Icon className="w-full h-full" />
+                </div>
+                <h3 className="font-display text-2xl text-russafa-high mb-3">{p.title}</h3>
                 <p className="text-russafa-cream/70 text-sm leading-relaxed">{p.text}</p>
               </div>
             ))}
@@ -272,24 +308,26 @@ export default function Home() {
       <section id="proceso" className="py-24 lg:py-32 bg-russafa-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="text-center mb-20">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-lime-bright mb-4">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
               Cómo trabajamos
             </p>
-            <h2 className="font-display-tight text-5xl lg:text-7xl text-russafa-dark">
-              Cuatro pasos. <span className="text-russafa-lime">Cero estrés.</span>
+            <h2 className="font-display-tight text-5xl lg:text-7xl text-russafa-pacific">
+              Cuatro pasos. <span className="text-russafa-vibrant">Cero estrés.</span>
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-            {/* Línea conectora */}
-            <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-px border-t border-dashed border-russafa-dark/20" />
+            <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-px border-t border-dashed border-russafa-pacific/20" />
 
             {PROCESS_STEPS.map((step) => (
               <div key={step.n} className="relative">
-                <div className="w-24 h-24 rounded-full bg-russafa-lime flex items-center justify-center mb-6 relative z-10 mx-auto lg:mx-0 group hover:scale-110 transition-transform">
-                  <span className="font-display text-3xl text-russafa-dark">{step.n}</span>
+                <div className="w-24 h-24 rounded-full bg-russafa-high flex items-center justify-center mb-6 relative z-10 mx-auto lg:mx-0 group hover:scale-110 transition-transform">
+                  <span className="font-display text-3xl text-russafa-pacific">{step.n}</span>
                 </div>
-                <h3 className="font-display text-2xl text-russafa-dark mb-3 text-center lg:text-left">
+                <div className="w-12 h-12 mb-4 mx-auto lg:mx-0 text-russafa-pacific">
+                  <step.Icon className="w-full h-full" />
+                </div>
+                <h3 className="font-display text-2xl text-russafa-pacific mb-3 text-center lg:text-left">
                   {step.title}
                 </h3>
                 <p className="text-russafa-gray text-sm leading-relaxed text-center lg:text-left">
@@ -306,11 +344,11 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
             <div className="lg:sticky lg:top-32">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-lime-bright mb-4">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
                 Dónde llegamos
               </p>
-              <h2 className="font-display-tight text-5xl lg:text-6xl text-russafa-dark mb-6">
-                Toda <span className="text-russafa-lime">La Safor</span> y mucho más.
+              <h2 className="font-display-tight text-5xl lg:text-6xl text-russafa-pacific mb-6">
+                Toda <span className="text-russafa-vibrant">La Safor</span> y mucho más.
               </h2>
               <p className="text-russafa-gray leading-relaxed mb-8">
                 Cubrimos Gandia y todos los municipios de La Safor con la misma rapidez y trato. Y si te
@@ -326,10 +364,10 @@ export default function Home() {
                 <Link
                   key={z.slug}
                   href={`/mudanzas-${z.slug}`}
-                  className="group flex items-center justify-between rounded-2xl border border-russafa-dark/10 p-5 hover:border-russafa-lime hover:bg-russafa-lime/5 transition-all"
+                  className="group flex items-center justify-between rounded-2xl border border-russafa-pacific/10 p-5 hover:border-russafa-vibrant hover:bg-russafa-vibrant/5 transition-all"
                 >
                   <div>
-                    <h3 className="font-display text-xl text-russafa-dark group-hover:text-russafa-dark-deep">
+                    <h3 className="font-display text-xl text-russafa-pacific group-hover:text-russafa-pacific-deep">
                       {z.name}
                     </h3>
                     {z.distance && (
@@ -337,7 +375,7 @@ export default function Home() {
                     )}
                   </div>
                   <span
-                    className="text-russafa-dark/30 group-hover:text-russafa-lime group-hover:translate-x-1 transition-all"
+                    className="text-russafa-pacific/30 group-hover:text-russafa-vibrant group-hover:translate-x-1 transition-all"
                     aria-hidden="true"
                   >
                     →
@@ -354,11 +392,14 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-lime-bright mb-4">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
                 Lo que dicen
               </p>
-              <h2 className="font-display-tight text-5xl lg:text-7xl text-russafa-dark">
-                <span className="text-russafa-lime">★ 4.9</span> sobre 5
+              <h2 className="font-display-tight text-5xl lg:text-7xl text-russafa-pacific flex items-center gap-3">
+                <span className="text-russafa-yellow inline-flex items-center gap-2">
+                  <LassoStar className="w-12 h-12" /> 4.9
+                </span>{" "}
+                sobre 5
               </h2>
             </div>
             <p className="text-russafa-gray max-w-md">
@@ -370,18 +411,22 @@ export default function Home() {
             {TESTIMONIALS.map((t) => (
               <article
                 key={t.name}
-                className="bg-white rounded-3xl p-8 border border-russafa-dark/8 hover:border-russafa-lime transition-colors relative"
+                className="bg-white rounded-3xl p-8 border border-russafa-pacific/8 hover:border-russafa-vibrant transition-colors relative"
               >
-                <div className="text-russafa-lime mb-4 text-xl">{"★".repeat(t.rating)}</div>
-                <blockquote className="text-russafa-dark leading-relaxed mb-6">
+                <div className="text-russafa-yellow mb-4 flex gap-0.5">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <LassoStar key={i} className="w-5 h-5" />
+                  ))}
+                </div>
+                <blockquote className="text-russafa-pacific leading-relaxed mb-6">
                   &ldquo;{t.text}&rdquo;
                 </blockquote>
-                <footer className="flex items-center gap-3 pt-4 border-t border-russafa-dark/8">
-                  <div className="w-10 h-10 rounded-full bg-russafa-lime flex items-center justify-center font-display text-russafa-dark">
+                <footer className="flex items-center gap-3 pt-4 border-t border-russafa-pacific/8">
+                  <div className="w-10 h-10 rounded-full bg-russafa-vibrant flex items-center justify-center font-display text-russafa-pacific">
                     {t.name[0]}
                   </div>
                   <div>
-                    <div className="font-bold text-russafa-dark text-sm">{t.name}</div>
+                    <div className="font-bold text-russafa-pacific text-sm">{t.name}</div>
                     <div className="text-xs text-russafa-gray">{t.location}</div>
                   </div>
                 </footer>
@@ -394,12 +439,12 @@ export default function Home() {
       {/* ────────────────────────────── PRESUPUESTO ────────────────────────────── */}
       <section
         id="presupuesto"
-        className="py-24 lg:py-32 bg-russafa-dark text-russafa-cream relative overflow-hidden"
+        className="py-24 lg:py-32 bg-russafa-pacific text-russafa-cream relative overflow-hidden bg-noise"
       >
         <div className="absolute inset-0 bg-grid-dark opacity-30" />
         <div
           aria-hidden="true"
-          className="absolute -left-32 -bottom-32 text-[30rem] leading-none font-display text-russafa-lime/8 select-none pointer-events-none"
+          className="absolute -left-32 -bottom-32 text-[30rem] leading-none font-display text-russafa-high/8 select-none pointer-events-none"
         >
           R
         </div>
@@ -407,11 +452,11 @@ export default function Home() {
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-lime mb-4">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-high mb-4">
                 Presupuesto sin compromiso
               </p>
               <h2 className="font-display-tight text-5xl lg:text-6xl mb-6">
-                Cuéntanos <span className="text-russafa-lime">lo que necesitas</span> y te respondemos
+                Cuéntanos <span className="text-russafa-high">lo que necesitas</span> y te respondemos
                 en 24h.
               </h2>
               <p className="text-russafa-cream/70 leading-relaxed mb-8">
@@ -447,11 +492,11 @@ export default function Home() {
       <section className="py-24 lg:py-32 bg-russafa-cream" id="faq">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-10">
           <div className="text-center mb-16">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-lime-bright mb-4">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
               Preguntas frecuentes
             </p>
-            <h2 className="font-display-tight text-5xl lg:text-6xl text-russafa-dark">
-              Todo lo que <span className="text-russafa-lime">quieres saber.</span>
+            <h2 className="font-display-tight text-5xl lg:text-6xl text-russafa-pacific">
+              Todo lo que <span className="text-russafa-vibrant">quieres saber.</span>
             </h2>
           </div>
 
@@ -459,12 +504,12 @@ export default function Home() {
             {FAQS.map((f) => (
               <details
                 key={f.q}
-                className="group rounded-2xl border border-russafa-dark/10 bg-white open:border-russafa-lime hover:border-russafa-dark/20 transition-colors"
+                className="group rounded-2xl border border-russafa-pacific/10 bg-white open:border-russafa-vibrant hover:border-russafa-pacific/20 transition-colors"
               >
                 <summary className="flex items-center justify-between gap-4 cursor-pointer list-none p-6">
-                  <h3 className="font-display text-xl text-russafa-dark">{f.q}</h3>
+                  <h3 className="font-display text-xl text-russafa-pacific">{f.q}</h3>
                   <span
-                    className="shrink-0 w-8 h-8 rounded-full bg-russafa-cream flex items-center justify-center text-russafa-dark group-open:bg-russafa-lime group-open:rotate-45 transition-all font-display text-xl"
+                    className="shrink-0 w-8 h-8 rounded-full bg-russafa-cream flex items-center justify-center text-russafa-pacific group-open:bg-russafa-vibrant group-open:rotate-45 transition-all font-display text-xl"
                     aria-hidden="true"
                   >
                     +
@@ -475,7 +520,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* JSON-LD para FAQ rich snippets */}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{

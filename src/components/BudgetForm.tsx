@@ -6,19 +6,19 @@ import { submitBudgetRequest, type BudgetFormState } from "@/app/actions";
 const initialState: BudgetFormState = { status: "idle" };
 
 const FIELD_BASE =
-  "w-full rounded-xl border border-russafa-dark/10 bg-russafa-cream px-4 py-3 text-russafa-dark placeholder:text-russafa-gray/60 focus:border-russafa-lime focus:bg-white focus:outline-none transition";
+  "w-full rounded-xl border border-russafa-pacific/10 bg-russafa-cream px-4 py-3 text-russafa-pacific placeholder:text-russafa-gray/60 focus:border-russafa-vibrant focus:bg-white focus:outline-none transition";
 
 export default function BudgetForm() {
   const [state, formAction, pending] = useActionState(submitBudgetRequest, initialState);
 
   if (state.status === "success") {
     return (
-      <div className="rounded-3xl bg-russafa-lime p-10 text-center">
+      <div className="rounded-3xl bg-russafa-high p-10 text-center">
         <div className="text-6xl mb-4" aria-hidden="true">
           ✓
         </div>
-        <h3 className="font-display text-3xl text-russafa-dark mb-3">¡Listo!</h3>
-        <p className="text-russafa-dark/80 max-w-md mx-auto">{state.message}</p>
+        <h3 className="font-display text-3xl text-russafa-pacific mb-3">¡Listo!</h3>
+        <p className="text-russafa-pacific/80 max-w-md mx-auto">{state.message}</p>
       </div>
     );
   }
@@ -27,8 +27,8 @@ export default function BudgetForm() {
     <form action={formAction} className="space-y-4">
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-dark mb-2">
-            Nombre <span className="text-russafa-lime">*</span>
+          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-pacific mb-2">
+            Nombre <span className="text-russafa-vibrant">*</span>
           </label>
           <input
             type="text"
@@ -39,8 +39,8 @@ export default function BudgetForm() {
           />
         </div>
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-dark mb-2">
-            Teléfono <span className="text-russafa-lime">*</span>
+          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-pacific mb-2">
+            Teléfono <span className="text-russafa-vibrant">*</span>
           </label>
           <input
             type="tel"
@@ -53,7 +53,7 @@ export default function BudgetForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-bold uppercase tracking-wider text-russafa-dark mb-2">
+        <label className="block text-xs font-bold uppercase tracking-wider text-russafa-pacific mb-2">
           Email
         </label>
         <input
@@ -66,7 +66,7 @@ export default function BudgetForm() {
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-dark mb-2">
+          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-pacific mb-2">
             Desde dónde
           </label>
           <input
@@ -77,7 +77,7 @@ export default function BudgetForm() {
           />
         </div>
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-dark mb-2">
+          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-pacific mb-2">
             Hasta dónde
           </label>
           <input
@@ -91,13 +91,13 @@ export default function BudgetForm() {
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-dark mb-2">
+          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-pacific mb-2">
             Fecha aproximada
           </label>
           <input type="date" name="date" className={FIELD_BASE} />
         </div>
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-dark mb-2">
+          <label className="block text-xs font-bold uppercase tracking-wider text-russafa-pacific mb-2">
             Tipo de mudanza
           </label>
           <select name="type" className={FIELD_BASE} defaultValue="">
@@ -115,7 +115,7 @@ export default function BudgetForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-bold uppercase tracking-wider text-russafa-dark mb-2">
+        <label className="block text-xs font-bold uppercase tracking-wider text-russafa-pacific mb-2">
           Cuéntanos brevemente
         </label>
         <textarea

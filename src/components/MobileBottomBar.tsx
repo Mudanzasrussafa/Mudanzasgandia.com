@@ -5,11 +5,11 @@ import { buildPhoneUrl, buildWhatsappUrl } from "@/lib/site-config";
 
 export default function MobileBottomBar() {
   return (
-    <div className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-russafa-dark text-russafa-cream border-t border-russafa-lime/20 shadow-[0_-8px_24px_rgba(0,0,0,0.15)]">
-      <div className="grid grid-cols-3 divide-x divide-russafa-lime/15">
+    <div className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-russafa-pacific text-russafa-cream border-t border-russafa-high/20 shadow-[0_-8px_24px_rgba(0,0,0,0.15)]">
+      <div className="grid grid-cols-3 divide-x divide-russafa-high/15">
         <a
           href={buildPhoneUrl()}
-          className="flex flex-col items-center justify-center py-3 gap-1 active:bg-russafa-dark-deep transition-colors"
+          className="flex flex-col items-center justify-center py-3 gap-1 active:bg-russafa-pacific-deep transition-colors"
           aria-label="Llamar"
         >
           <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" aria-hidden="true">
@@ -21,7 +21,7 @@ export default function MobileBottomBar() {
           href={buildWhatsappUrl()}
           target="_blank"
           rel="noopener"
-          className="flex flex-col items-center justify-center py-3 gap-1 active:bg-russafa-dark-deep transition-colors"
+          className="flex flex-col items-center justify-center py-3 gap-1 active:bg-russafa-pacific-deep transition-colors"
           aria-label="WhatsApp"
         >
           <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" aria-hidden="true">
@@ -31,7 +31,7 @@ export default function MobileBottomBar() {
         </a>
         <Link
           href="/#presupuesto"
-          className="flex flex-col items-center justify-center py-3 gap-1 bg-russafa-lime text-russafa-dark active:bg-russafa-lime-bright transition-colors"
+          className="flex flex-col items-center justify-center py-3 gap-1 bg-russafa-high text-russafa-pacific active:bg-russafa-vibrant transition-colors"
         >
           <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" aria-hidden="true">
             <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H17V0h-2v2H9V0H7v2H4.5C3.12 2 2.01 3.12 2.01 4.5L2 20.5C2 21.88 3.12 23 4.5 23h15c1.38 0 2.5-1.12 2.5-2.5v-16C22 3.12 20.88 2 19.5 2zm0 18.5h-15V8h15v12.5z" />

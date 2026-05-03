@@ -2,10 +2,10 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <section className="min-h-[70vh] bg-russafa-dark text-russafa-cream flex items-center justify-center bg-noise relative overflow-hidden">
+    <section className="min-h-[70vh] bg-russafa-pacific text-russafa-cream flex items-center justify-center bg-noise relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-dark opacity-30" />
       <div className="relative text-center px-6">
-        <p className="font-display text-[12rem] lg:text-[18rem] leading-none text-russafa-lime">
+        <p className="font-display text-[12rem] lg:text-[18rem] leading-none text-russafa-high">
           404
         </p>
         <h1 className="font-display-tight text-3xl lg:text-5xl mt-4">

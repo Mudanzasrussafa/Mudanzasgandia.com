@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope } from "next/font/google";
-import localFont from "next/font/local";
+import { Inter, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/lib/site-config";
 import Header from "@/components/Header";
@@ -9,27 +8,27 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import MobileBottomBar from "@/components/MobileBottomBar";
 
 /**
- * Manrope para body (geométrica, legible, no genérica)
+ * Inter como sustituto cercano de Gotham (manual de marca usa Gotham
+ * para el cuerpo). Inter tiene proporciones similares y es gratuito.
  */
-const manrope = Manrope({
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-manrope",
+  variable: "--font-inter",
   weight: ["400", "500", "600", "700", "800"],
 });
 
 /**
- * Doing es la tipografía oficial del manual de marca Russafa.
- * Si la sirves desde Google Fonts añade aquí el import correspondiente
- * y reemplaza este `localFont` por `Doing` desde `next/font/google`.
- *
- * Mientras tanto, fallback con system-ui geométrico para que el sitio
- * no se rompa en build sin las fuentes locales descargadas.
+ * Bricolage Grotesque como sustituto cercano de Doing.
+ * Doing es una fuente comercial (Lazima); cuando esté licenciada,
+ * sustituir esta carga por la fuente real con next/font/local.
  */
-const fontFallback = {
-  variable: "--font-doing-fallback",
-  className: "",
-};
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-bricolage",
+  weight: ["400", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -89,21 +88,16 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    // Añade aquí cuando lo tengas
-    // google: "tu-codigo-search-console",
-  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0E3B36",
+  themeColor: "#02403D",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // JSON-LD para LocalBusiness / MovingCompany
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MovingCompany",
@@ -153,21 +147,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <html lang={SITE.language} className={`${manrope.variable} ${fontFallback.variable}`}>
+    <html lang={SITE.language} className={`${inter.variable} ${bricolage.variable}`}>
       <head>
-        {/* Tipografía Doing desde Google Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Doing:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={manrope.className}>
+      <body className={inter.className}>
         <Header />
         <main>{children}</main>
         <Footer />

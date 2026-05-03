@@ -4,8 +4,24 @@ import type { Metadata } from "next";
 import { SERVICES } from "@/data/services";
 import { SITE, buildPhoneUrl, buildWhatsappUrl } from "@/lib/site-config";
 import BudgetForm from "@/components/BudgetForm";
+import {
+  LassoTruck,
+  LassoBox,
+  LassoArm,
+  LassoShield,
+  LassoStair,
+} from "@/components/RussafaIcons";
 
 type Props = { params: Promise<{ slug: string }> };
+
+const ICON_MAP: Record<string, typeof LassoTruck> = {
+  "mudanzas-locales": LassoTruck,
+  "mudanzas-nacionales": LassoTruck,
+  "mudanzas-internacionales": LassoTruck,
+  guardamuebles: LassoShield,
+  "mudanzas-oficinas": LassoArm,
+  embalaje: LassoBox,
+};
 
 export async function generateStaticParams() {
   return SERVICES.map((s) => ({ slug: s.slug }));
@@ -35,19 +51,22 @@ export default async function ServicePage({ params }: Props) {
   if (!service) notFound();
 
   const otherServices = SERVICES.filter((s) => s.slug !== slug).slice(0, 3);
+  const Icon = ICON_MAP[slug] ?? LassoBox;
 
   return (
     <>
-      {/* Hero del servicio */}
-      <section className="relative bg-russafa-dark text-russafa-cream overflow-hidden bg-noise pt-20 pb-24 lg:pt-32 lg:pb-32">
+      <section className="relative bg-russafa-pacific text-russafa-cream overflow-hidden bg-noise pt-20 pb-24 lg:pt-32 lg:pb-32">
         <div className="absolute inset-0 bg-grid-dark opacity-40" />
+        <div className="absolute -right-20 -top-10 w-80 h-80 text-russafa-high/8">
+          <Icon className="w-full h-full" />
+        </div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <nav className="text-xs text-russafa-cream/60 mb-8" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-russafa-lime">
+            <Link href="/" className="hover:text-russafa-high">
               Inicio
             </Link>
             <span className="mx-2">/</span>
-            <Link href="/#servicios" className="hover:text-russafa-lime">
+            <Link href="/#servicios" className="hover:text-russafa-high">
               Servicios
             </Link>
             <span className="mx-2">/</span>
@@ -70,32 +89,31 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
 
-      {/* Cuerpo */}
       <section className="py-20 bg-russafa-cream">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-10">
-          <p className="text-russafa-dark text-lg leading-relaxed mb-12">{service.longDescription}</p>
+          <p className="text-russafa-pacific text-lg leading-relaxed mb-12">{service.longDescription}</p>
 
-          <h2 className="font-display text-3xl text-russafa-dark mb-6">Qué incluye</h2>
+          <h2 className="font-display text-3xl text-russafa-pacific mb-6">Qué incluye</h2>
           <ul className="grid sm:grid-cols-2 gap-3 mb-12">
             {service.bullets.map((b) => (
               <li
                 key={b}
-                className="flex items-start gap-3 bg-white border border-russafa-dark/10 rounded-2xl p-4"
+                className="flex items-start gap-3 bg-white border border-russafa-pacific/10 rounded-2xl p-4"
               >
                 <span
-                  className="shrink-0 w-6 h-6 rounded-full bg-russafa-lime flex items-center justify-center mt-0.5"
+                  className="shrink-0 w-6 h-6 rounded-full bg-russafa-vibrant flex items-center justify-center mt-0.5"
                   aria-hidden="true"
                 >
-                  <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg viewBox="0 0 12 12" className="w-3 h-3 text-russafa-pacific" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M2 6l3 3 5-5" />
                   </svg>
                 </span>
-                <span className="text-russafa-dark text-sm">{b}</span>
+                <span className="text-russafa-pacific text-sm">{b}</span>
               </li>
             ))}
           </ul>
 
-          <div className="rounded-3xl bg-russafa-dark text-russafa-cream p-8 lg:p-10 mb-12">
+          <div className="rounded-3xl bg-russafa-pacific text-russafa-cream p-8 lg:p-10 mb-12">
             <p className="font-display text-3xl mb-4">¿Te ayudamos?</p>
             <p className="text-russafa-cream/80 mb-6">
               Cuéntanos qué necesitas y te damos un presupuesto cerrado en menos de 24 horas.
@@ -117,28 +135,26 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
 
-      {/* Form */}
       <section id="presupuesto" className="py-20 bg-white">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-10">
-          <h2 className="font-display-tight text-4xl lg:text-5xl text-russafa-dark mb-8 text-center">
+          <h2 className="font-display-tight text-4xl lg:text-5xl text-russafa-pacific mb-8 text-center">
             Pide tu presupuesto para {service.shortTitle.toLowerCase()}
           </h2>
           <BudgetForm />
         </div>
       </section>
 
-      {/* Otros servicios */}
       <section className="py-20 bg-russafa-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-          <h2 className="font-display text-3xl text-russafa-dark mb-8">Otros servicios</h2>
+          <h2 className="font-display text-3xl text-russafa-pacific mb-8">Otros servicios</h2>
           <div className="grid sm:grid-cols-3 gap-4">
             {otherServices.map((s) => (
               <Link
                 key={s.slug}
                 href={`/servicios/${s.slug}`}
-                className="group block bg-white rounded-2xl p-6 border border-russafa-dark/10 hover:border-russafa-lime transition-colors"
+                className="group block bg-white rounded-2xl p-6 border border-russafa-pacific/10 hover:border-russafa-vibrant transition-colors"
               >
-                <h3 className="font-display text-xl text-russafa-dark group-hover:text-russafa-dark-deep mb-2">
+                <h3 className="font-display text-xl text-russafa-pacific group-hover:text-russafa-pacific-deep mb-2">
                   {s.shortTitle}
                 </h3>
                 <p className="text-russafa-gray text-sm">{s.description}</p>
