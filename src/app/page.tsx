@@ -4,106 +4,143 @@ import { SERVICES } from "@/data/services";
 import { ZONES } from "@/data/zones";
 import { SITE, buildPhoneUrl, buildWhatsappUrl } from "@/lib/site-config";
 import BudgetForm from "@/components/BudgetForm";
-import {
-  LassoLeg,
-  LassoStair,
-  LassoArm,
-  LassoBox,
-  LassoTruck,
-  LassoShield,
-  LassoClock,
-  LassoStar,
-} from "@/components/RussafaIcons";
+import { RussafaIcon, type RussafaIconName } from "@/components/RussafaIcons";
+import RussafaIsotype from "@/components/RussafaIsotype";
+import Associations from "@/components/Associations";
 
 export const metadata: Metadata = {
-  title: "Mudanzas Gandia · Empresa de mudanzas y guardamuebles en La Safor",
+  title: "Mudanzas en Gandia 🥇 | Mudanzas Russafa",
   description:
-    "Empresa de mudanzas en Gandia. Locales, nacionales e internacionales + guardamuebles. Presupuesto cerrado, sin sorpresas. Atendemos toda La Safor.",
+    "Empresa de mudanzas en Gandia y La Safor. Mudanzas particulares, oficinas, pequeñas, nacionales e internacionales. Guardamuebles, embalaje y vaciado de viviendas. Presupuesto cerrado sin compromiso.",
   alternates: { canonical: SITE.url },
 };
 
-const STATS = [
-  { value: "+15", label: "años en el sector" },
-  { value: "+3.000", label: "mudanzas realizadas" },
-  { value: "4.9/5", label: "valoración media" },
-  { value: "24h", label: "respuesta presupuesto" },
-];
-
 const PROCESS_STEPS = [
   {
-    n: "01",
-    title: "Hablamos",
-    text: "Llámanos o pídenos presupuesto. Escuchamos qué necesitas y te asesoramos sin compromiso.",
-    Icon: LassoArm,
+    n: "1",
+    title: "Contacta con nosotros",
+    text: "Completa nuestro formulario o llámanos para hablar con uno de nuestros expertos.",
   },
   {
-    n: "02",
-    title: "Visita y presupuesto",
-    text: "Si hace falta, vamos a tu casa a ver el volumen. Te damos un precio cerrado por escrito.",
-    Icon: LassoBox,
+    n: "2",
+    title: "Visita a tu domicilio",
+    text: "Un técnico se desplazará a tu domicilio para analizar todos los detalles de tu mudanza.",
   },
   {
-    n: "03",
-    title: "Embalaje y traslado",
-    text: "Llegamos puntuales. Embalamos, desmontamos, trasladamos y montamos en destino.",
-    Icon: LassoTruck,
+    n: "3",
+    title: "Recibe tu presupuesto",
+    text: "Te enviaremos un presupuesto detallado en menos de 24 horas.",
   },
   {
-    n: "04",
-    title: "Tu siguiente paso",
-    text: "Te entregamos todo colocado y listo. Empieza tu nueva etapa sin haberte preocupado por nada.",
-    Icon: LassoStair,
-  },
-];
-
-const WHY_US = [
-  {
-    title: "Presupuesto cerrado",
-    text: "Lo que decimos es lo que pagas. Sin extras de última hora ni sorpresas.",
-    Icon: LassoShield,
+    n: "4",
+    title: "Aceptación y fecha",
+    text: "Una vez aceptado, fijamos la fecha y gestionamos los permisos necesarios.",
   },
   {
-    title: "Equipo propio",
-    text: "Operarios con formación específica en mudanzas. Nada de subcontratas.",
-    Icon: LassoArm,
-  },
-  {
-    title: "Seguro incluido",
-    text: "Responsabilidad civil y seguro de mercancías incluido en cada servicio.",
-    Icon: LassoBox,
-  },
-  {
-    title: "Acompañamiento",
-    text: "Un único interlocutor desde el primer contacto hasta el último mueble.",
-    Icon: LassoClock,
+    n: "5",
+    title: "El día de la mudanza",
+    text: "Nos encargamos de todo para que tu mudanza sea rápida y sin complicaciones.",
   },
 ];
 
-const TESTIMONIALS = [
+const WHY_US: Array<{ title: string; text: string; icon: RussafaIconName }> = [
   {
-    name: "Laura M.",
-    location: "Playa de Gandia",
-    text: "Mudanza desde un quinto sin ascensor a Oliva en un día. Llegaron a la hora, con todo embalado y montaron los muebles. Sin un rasguño. Muy recomendables.",
-    rating: 5,
+    title: "Seguridad y tranquilidad",
+    text: "Tus pertenencias están en buenas manos. Contamos con seguros de responsabilidad civil que cubren cualquier imprevisto durante el traslado.",
+    icon: "seguros",
   },
   {
-    name: "Vicente A.",
-    location: "Gandia centro",
-    text: "Buscaba una empresa seria y la encontré. Presupuesto cerrado, sin extras de última hora. El equipo súper amable y profesional.",
-    rating: 5,
+    title: "Los mejores precios",
+    text: "Ofrecemos precios competitivos, manteniendo siempre la máxima calidad en nuestros servicios. Nos adaptamos a tu presupuesto.",
+    icon: "mejores-precios",
   },
   {
-    name: "Marta R.",
-    location: "Tavernes de la Valldigna",
-    text: "Hicieron una mudanza con guardamuebles incluido mientras reformábamos la casa. Todo perfecto, sin daños y con muy buen trato.",
-    rating: 5,
+    title: "Presupuestos detallados",
+    text: "Nuestros presupuestos son transparentes y detallados. Te explicamos todo desde el principio para evitar sorpresas.",
+    icon: "presupuestos-detallados",
+  },
+  {
+    title: "Atención personalizada",
+    text: "Te asignamos un coordinador que estará contigo durante todo el proceso, asegurándose de que cada detalle se gestione con eficacia.",
+    icon: "atencion-rapida",
+  },
+];
+
+// Servicios destacados (los 3 principales en el bloque "Los Mejores Servicios")
+const MAIN_SERVICES: Array<{ slug: string; title: string; text: string; cta: string; icon: RussafaIconName }> = [
+  {
+    slug: "mudanzas-particulares",
+    title: "Mudanzas Particulares",
+    text: "Desmontamos, protegemos y movemos tu hogar como si fuese nuestro.",
+    cta: "Saber más",
+    icon: "mudanzas-particulares",
+  },
+  {
+    slug: "mudanzas-oficinas",
+    title: "Mudanzas de oficinas",
+    text: "Organizamos y trasladamos tu empresa con una logística adaptada a tus necesidades.",
+    cta: "Más info",
+    icon: "mudanzas-oficinas",
+  },
+  {
+    slug: "mudanzas-pequenas",
+    title: "Mudanzas pequeñas",
+    text: "Ofrecemos los presupuestos más económicos de La Safor. ¿Eres flexible con la fecha?",
+    cta: "Cuéntame más",
+    icon: "mudanzas-pequenas",
+  },
+  {
+    slug: "mudanzas-nacionales",
+    title: "Mudanzas nacionales",
+    text: "Disponemos de diferentes rutas habituales entre Gandia y el resto del país.",
+    cta: "Leer más",
+    icon: "mudanzas-nacionales",
+  },
+  {
+    slug: "guardamuebles",
+    title: "Guardamuebles",
+    text: "Ofrecemos un servicio de guardamuebles en Gandia el tiempo que necesites.",
+    cta: "Cuéntame más",
+    icon: "guardamuebles",
+  },
+];
+
+// Servicios adicionales (bloque inferior)
+const ADDITIONAL_SERVICES: Array<{ slug: string; title: string; text: string; cta: string; icon: RussafaIconName }> = [
+  {
+    slug: "embalaje-de-contenidos",
+    title: "Embalaje de contenidos",
+    text: "Embalamos tus muebles y enseres para que no tengas que preocuparte de nada.",
+    cta: "Leer más",
+    icon: "embalaje",
+  },
+  {
+    slug: "desmontaje-y-montaje",
+    title: "Desmontaje y montaje",
+    text: "Desmontamos tus muebles y los volvemos a montar en la nueva ubicación.",
+    cta: "Saber más",
+    icon: "desmontaje-montaje",
+  },
+  {
+    slug: "elevador-montamuebles",
+    title: "Elevador montamuebles",
+    text: "Contamos con elevador montamuebles en Gandia de hasta 30 metros de altura.",
+    cta: "Cuéntame más",
+    icon: "elevador-montamuebles",
+  },
+  {
+    slug: "vaciado-de-viviendas",
+    title: "Vaciado de viviendas",
+    text: "Disponemos de servicio de vaciado integral de viviendas y traslado al ecoparque.",
+    cta: "Más info",
+    icon: "vaciado-viviendas",
   },
 ];
 
 const FAQS = [
   {
     q: "¿Cuánto cuesta una mudanza en Gandia?",
-    a: "El precio depende del volumen, distancia, planta y accesos. Para una mudanza local en Gandia, los precios suelen ir desde 250 € (un piso pequeño) hasta 1.200 € o más para casas grandes. Pídenos un presupuesto cerrado gratis y te lo decimos exacto en menos de 24 horas.",
+    a: "El precio de una mudanza en Gandia depende de varios factores, como la distancia, el volumen de los objetos o los servicios que necesites. En Mudanzas Russafa te ofrecemos presupuestos detallados y sin compromiso, con toda la información que necesitas desde el primer momento. Para una mudanza local, los precios suelen ir desde 250 € hasta 1.200 €.",
   },
   {
     q: "¿Hacéis mudanzas el mismo día u urgentes?",
@@ -129,86 +166,105 @@ const FAQS = [
   },
 ];
 
-// Iconos rotando para servicios
-const SERVICE_ICONS = [LassoTruck, LassoBox, LassoArm, LassoShield, LassoStair, LassoBox];
-
 export default function Home() {
   return (
     <>
-      {/* ────────────────────────────── HERO ────────────────────────────── */}
+      {/* ────────────────── HERO ────────────────── */}
       <section className="relative overflow-hidden bg-russafa-pacific text-russafa-cream bg-noise">
         <div className="absolute inset-0 bg-grid-dark opacity-40" />
 
-        {/* R isotipo gigante decorativa */}
+        {/* Isotipo R oficial gigante decorativo */}
         <div
           aria-hidden="true"
-          className="absolute -right-32 -top-20 lg:-right-20 lg:-top-10 text-[28rem] lg:text-[40rem] leading-none font-display text-russafa-vibrant/8 select-none pointer-events-none"
+          className="absolute -right-24 -top-16 lg:-right-12 lg:-top-20 w-[26rem] lg:w-[40rem] opacity-[0.07] pointer-events-none select-none"
         >
-          R
+          <RussafaIsotype variant="withEyes" tone="vibrant" size={640} decorative />
         </div>
         <div className="absolute top-1/2 -left-48 w-96 h-96 rounded-full bg-russafa-high/15 blur-[120px]" />
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 pt-20 pb-28 lg:pt-32 lg:pb-40">
-          <div className="max-w-4xl">
-            <p className="animate-rise inline-flex items-center gap-2 rounded-full border border-russafa-high/30 bg-russafa-high/5 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-russafa-high">
-              <span className="w-1.5 h-1.5 rounded-full bg-russafa-high animate-pulse" />
-              Mudanzas en Gandia y La Safor
-            </p>
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 pt-20 pb-24 lg:pt-28 lg:pb-32">
+          <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 lg:gap-16 items-start">
+            {/* Columna izquierda: copy */}
+            <div>
+              <p className="animate-rise inline-flex items-center gap-2 rounded-full border border-russafa-high/30 bg-russafa-high/5 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-russafa-high">
+                <span className="w-1.5 h-1.5 rounded-full bg-russafa-high animate-pulse" />
+                Empresa de mudanzas en Gandia y La Safor
+              </p>
 
-            <h1 className="animate-rise animate-rise-delay-1 mt-8 font-display-tight text-5xl sm:text-7xl lg:text-[7.5rem] text-russafa-cream">
-              Tu siguiente
-              <br />
-              paso en{" "}
-              <span className="relative inline-block text-russafa-high">
-                Gandia
-                <svg
-                  viewBox="0 0 200 12"
-                  className="absolute -bottom-2 left-0 w-full"
-                  preserveAspectRatio="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M0 8 Q 50 2, 100 6 T 200 4"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    fill="none"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </h1>
+              <h1 className="animate-rise animate-rise-delay-1 mt-8 font-display-tight text-5xl sm:text-7xl lg:text-[6.5rem] text-russafa-cream uppercase">
+                Mudanzas
+                <br />
+                en{" "}
+                <span className="relative inline-block text-russafa-high">
+                  Gandia
+                  <svg
+                    viewBox="0 0 200 12"
+                    className="absolute -bottom-2 left-0 w-full"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M0 8 Q 50 2, 100 6 T 200 4"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      fill="none"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+              </h1>
 
-            <p className="animate-rise animate-rise-delay-2 mt-8 max-w-2xl text-lg lg:text-xl text-russafa-cream/80 leading-relaxed">
-              No solo trasladamos cajas. Te acompañamos en el cambio. Con presupuesto
-              cerrado, equipo profesional y la confianza de Mudanzas Russafa.
-            </p>
+              <p className="animate-rise animate-rise-delay-2 mt-8 max-w-xl text-lg lg:text-xl text-russafa-cream/85 leading-relaxed">
+                Cada cambio es una <strong className="text-russafa-high">nueva oportunidad.</strong> Y
+                cada oportunidad comienza con una <strong className="text-russafa-high">decisión.</strong>
+              </p>
+              <p className="animate-rise animate-rise-delay-2 mt-4 text-russafa-cream/70">
+                Pide presupuesto sin compromiso. Te respondemos en menos de 24 horas.
+              </p>
 
-            <div className="animate-rise animate-rise-delay-3 mt-10 flex flex-wrap gap-3">
-              <Link href="#presupuesto" className="btn-russafa btn-russafa-primary text-base">
-                Pedir presupuesto gratis
-                <span aria-hidden="true">→</span>
-              </Link>
-              <a href={buildWhatsappUrl()} target="_blank" rel="noopener" className="btn-russafa btn-russafa-ghost">
-                WhatsApp directo
-              </a>
-            </div>
+              <div className="animate-rise animate-rise-delay-3 mt-10 flex flex-wrap gap-3">
+                <a href={buildPhoneUrl()} className="btn-russafa btn-russafa-primary text-base">
+                  {SITE.phone}
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a href={buildWhatsappUrl()} target="_blank" rel="noopener" className="btn-russafa btn-russafa-ghost">
+                  WhatsApp
+                </a>
+              </div>
 
-            {/* Iconos lasso decorativos en el hero */}
-            <div className="hidden lg:flex absolute right-12 bottom-32 gap-8 text-russafa-high/30">
-              <LassoLeg className="w-32 h-32 animate-rise animate-rise-delay-4" />
-            </div>
-
-            {/* Stats inline */}
-            <dl className="animate-rise animate-rise-delay-4 mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 max-w-3xl">
-              {STATS.map((s) => (
-                <div key={s.label} className="border-l-2 border-russafa-high pl-4">
-                  <dt className="font-display text-3xl lg:text-5xl text-russafa-high">{s.value}</dt>
-                  <dd className="mt-1 text-xs lg:text-sm text-russafa-cream/60 uppercase tracking-wider">
-                    {s.label}
-                  </dd>
+              {/* Stats */}
+              <dl className="animate-rise animate-rise-delay-4 mt-14 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-2xl">
+                <div className="border-l-2 border-russafa-high pl-4">
+                  <dt className="font-display text-3xl lg:text-4xl text-russafa-high">+15</dt>
+                  <dd className="mt-1 text-xs text-russafa-cream/60 uppercase tracking-wider">años de experiencia</dd>
                 </div>
-              ))}
-            </dl>
+                <div className="border-l-2 border-russafa-high pl-4">
+                  <dt className="font-display text-3xl lg:text-4xl text-russafa-high">+3.000</dt>
+                  <dd className="mt-1 text-xs text-russafa-cream/60 uppercase tracking-wider">mudanzas realizadas</dd>
+                </div>
+                <div className="border-l-2 border-russafa-high pl-4">
+                  <dt className="font-display text-3xl lg:text-4xl text-russafa-high">4.9★</dt>
+                  <dd className="mt-1 text-xs text-russafa-cream/60 uppercase tracking-wider">valoración media</dd>
+                </div>
+                <div className="border-l-2 border-russafa-high pl-4">
+                  <dt className="font-display text-3xl lg:text-4xl text-russafa-high">24h</dt>
+                  <dd className="mt-1 text-xs text-russafa-cream/60 uppercase tracking-wider">respuesta presupuesto</dd>
+                </div>
+              </dl>
+            </div>
+
+            {/* Columna derecha: formulario */}
+            <div className="animate-rise animate-rise-delay-3">
+              <div className="bg-russafa-cream rounded-3xl p-6 lg:p-8 shadow-2xl">
+                <h2 className="font-display text-2xl text-russafa-pacific mb-2">
+                  Pide tu presupuesto
+                </h2>
+                <p className="text-sm text-russafa-gray mb-6">
+                  Sin compromiso · Respuesta en 24h
+                </p>
+                <BudgetForm />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -222,137 +278,170 @@ export default function Home() {
         </svg>
       </section>
 
-      {/* ────────────────────────────── SERVICIOS ────────────────────────────── */}
-      <section id="servicios" className="py-24 lg:py-32 bg-russafa-cream">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4 inline-flex items-center gap-2">
-                <span className="w-8 h-px bg-russafa-pacific/30" />
-                Lo que hacemos
-              </p>
-              <h2 className="font-display-tight text-5xl lg:text-7xl text-russafa-pacific max-w-2xl">
-                Servicios completos para
-                <span className="text-russafa-vibrant"> mudarte sin estrés</span>
-              </h2>
-            </div>
-            <p className="text-russafa-gray max-w-md">
-              Desde una mudanza local en Gandia hasta un traslado internacional, pasando por guardamuebles
-              y oficinas. Cada servicio con la misma promesa: nada queda al azar.
+      {/* ────────────────── INTRO ────────────────── */}
+      <section className="py-20 lg:py-24 bg-russafa-cream">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-10">
+          <h2 className="font-display-tight text-4xl lg:text-5xl text-russafa-pacific mb-8">
+            Empresa de Mudanzas en <span className="text-russafa-vibrant">Gandia</span>
+          </h2>
+          <div className="space-y-5 text-russafa-pacific text-lg leading-relaxed">
+            <p>
+              <strong>Mudanzas Russafa</strong> es una empresa especializada en mudanzas y el
+              transporte de muebles y enseres en Gandia y toda La Safor. Somos una compañía valenciana
+              que prestamos servicios tanto a particulares como a empresas. Nuestros operarios realizan
+              cualquier tipo de mudanzas y traslados en la Comunidad Valenciana, en el ámbito nacional
+              y en gran parte de Europa.
             </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {SERVICES.map((s, i) => {
-              const Icon = SERVICE_ICONS[i] ?? LassoBox;
-              return (
-                <Link
-                  key={s.slug}
-                  href={`/servicios/${s.slug}`}
-                  className="group relative overflow-hidden rounded-3xl bg-white border border-russafa-pacific/8 p-8 hover:border-russafa-vibrant hover:shadow-[0_24px_60px_-20px_rgba(2,64,61,0.25)] transition-all duration-300"
-                >
-                  <div className="absolute top-6 right-6 w-16 h-16 text-russafa-pacific/15 group-hover:text-russafa-vibrant transition-colors duration-300">
-                    <Icon className="w-full h-full" />
-                  </div>
-                  <div className="absolute top-6 left-6 font-display text-3xl text-russafa-cream group-hover:text-russafa-high transition-colors duration-300">
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
-                  <h3 className="font-display text-3xl text-russafa-pacific mb-3 mt-20 max-w-[80%] leading-tight">
-                    {s.shortTitle}
-                  </h3>
-                  <p className="text-russafa-gray text-sm leading-relaxed mb-6">{s.description}</p>
-                  <span className="inline-flex items-center gap-2 text-sm font-bold text-russafa-pacific group-hover:text-russafa-vibrant transition-colors">
-                    Ver más
-                    <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">
-                      →
-                    </span>
-                  </span>
-                  <div className="absolute -bottom-1 left-0 h-1 w-0 bg-russafa-vibrant group-hover:w-full transition-all duration-500" />
-                </Link>
-              );
-            })}
+            <p>
+              Realizamos las <strong>mudanzas más económicas y competitivas de La Safor</strong>. Te
+              asesoramos y ayudamos a planificar mudanzas a Gandia o desde Gandia de la forma más
+              barata, segura y rápida. Nos adaptamos a cada cliente configurando presupuestos a
+              medida y flexibles para que se ajusten a las particularidades de cada mudanza.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ────────────────────────────── POR QUÉ NOSOTROS ────────────────────────────── */}
-      <section className="py-24 lg:py-32 bg-russafa-pacific text-russafa-cream relative overflow-hidden bg-noise">
+      {/* ────────────────── SERVICIOS PRINCIPALES ────────────────── */}
+      <section id="servicios" className="py-20 lg:py-24 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+          <div className="text-center mb-14">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
+              Lo que hacemos
+            </p>
+            <h2 className="font-display-tight text-4xl lg:text-6xl text-russafa-pacific">
+              Los Mejores Servicios para <span className="text-russafa-vibrant">Mudanzas</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {MAIN_SERVICES.map((s) => (
+              <Link
+                key={s.slug}
+                href={`/servicios/${s.slug}`}
+                className="group relative overflow-hidden rounded-3xl bg-russafa-cream border border-russafa-pacific/8 p-8 hover:border-russafa-vibrant hover:shadow-[0_24px_60px_-20px_rgba(2,64,61,0.25)] transition-all duration-300"
+              >
+                <div className="flex justify-end mb-4">
+                  <RussafaIcon name={s.icon} size={120} />
+                </div>
+                <h3 className="font-display text-2xl text-russafa-pacific mb-3">{s.title}</h3>
+                <p className="text-russafa-gray text-sm leading-relaxed mb-6">{s.text}</p>
+                <span className="inline-flex items-center gap-2 text-sm font-bold text-russafa-pacific group-hover:text-russafa-vibrant transition-colors">
+                  {s.cta}
+                  <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">
+                    →
+                  </span>
+                </span>
+                <div className="absolute -bottom-1 left-0 h-1 w-0 bg-russafa-vibrant group-hover:w-full transition-all duration-500" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────── ¿CÓMO TRABAJAMOS? ────────────────── */}
+      <section id="proceso" className="py-20 lg:py-24 bg-russafa-pacific text-russafa-cream relative overflow-hidden bg-noise">
         <div className="absolute inset-0 bg-grid-dark opacity-30" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-          <div className="max-w-3xl mb-16">
+          <div className="text-center mb-14">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-high mb-4">
-              Por qué Russafa
-            </p>
-            <h2 className="font-display-tight text-5xl lg:text-7xl">
-              Cuidamos tu mudanza
-              <br />
-              <span className="text-russafa-high">como cuidamos la nuestra.</span>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-russafa-high/15 rounded-3xl overflow-hidden">
-            {WHY_US.map((p) => (
-              <div key={p.title} className="bg-russafa-pacific p-8 lg:p-10">
-                <div className="w-14 h-14 mb-6 text-russafa-high">
-                  <p.Icon className="w-full h-full" />
-                </div>
-                <h3 className="font-display text-2xl text-russafa-high mb-3">{p.title}</h3>
-                <p className="text-russafa-cream/70 text-sm leading-relaxed">{p.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ────────────────────────────── PROCESO ────────────────────────────── */}
-      <section id="proceso" className="py-24 lg:py-32 bg-russafa-cream">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-          <div className="text-center mb-20">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
               Cómo trabajamos
             </p>
-            <h2 className="font-display-tight text-5xl lg:text-7xl text-russafa-pacific">
-              Cuatro pasos. <span className="text-russafa-vibrant">Cero estrés.</span>
+            <h2 className="font-display-tight text-4xl lg:text-6xl">
+              ¿Cómo trabajamos tus <span className="text-russafa-high">mudanzas en Gandia?</span>
             </h2>
+            <p className="mt-6 max-w-3xl mx-auto text-russafa-cream/75 leading-relaxed">
+              Si estás pensando en contratar una empresa de mudanzas en Gandia, ponte en contacto
+              con nosotros para obtener un presupuesto gratis. Nos diferenciamos por nuestro trato
+              personalizado y familiar.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-            <div className="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-px border-t border-dashed border-russafa-pacific/20" />
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {PROCESS_STEPS.map((step) => (
-              <div key={step.n} className="relative">
-                <div className="w-24 h-24 rounded-full bg-russafa-high flex items-center justify-center mb-6 relative z-10 mx-auto lg:mx-0 group hover:scale-110 transition-transform">
-                  <span className="font-display text-3xl text-russafa-pacific">{step.n}</span>
+              <div key={step.n} className="text-center lg:text-left">
+                <div className="w-16 h-16 rounded-full bg-russafa-high text-russafa-pacific font-display text-3xl flex items-center justify-center mb-4 mx-auto lg:mx-0">
+                  {step.n}
                 </div>
-                <div className="w-12 h-12 mb-4 mx-auto lg:mx-0 text-russafa-pacific">
-                  <step.Icon className="w-full h-full" />
-                </div>
-                <h3 className="font-display text-2xl text-russafa-pacific mb-3 text-center lg:text-left">
-                  {step.title}
-                </h3>
-                <p className="text-russafa-gray text-sm leading-relaxed text-center lg:text-left">
-                  {step.text}
-                </p>
+                <h3 className="font-display text-xl mb-2">{step.title}</h3>
+                <p className="text-sm text-russafa-cream/70 leading-relaxed">{step.text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ────────────────────────────── ZONAS ────────────────────────────── */}
-      <section id="zonas" className="py-24 lg:py-32 bg-white">
+      {/* ────────────────── ¿POR QUÉ ELEGIRNOS? ────────────────── */}
+      <section className="py-20 lg:py-24 bg-russafa-cream">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-          <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start">
+          <div className="text-center mb-14">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
+              Por qué Russafa
+            </p>
+            <h2 className="font-display-tight text-4xl lg:text-6xl text-russafa-pacific">
+              ¿Por qué elegirnos para tus <span className="text-russafa-vibrant">mudanzas en Gandia?</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {WHY_US.map((p) => (
+              <div key={p.title} className="bg-white rounded-3xl p-8 border border-russafa-pacific/8 hover:border-russafa-vibrant transition-colors">
+                <div className="mb-5">
+                  <RussafaIcon name={p.icon} size={88} />
+                </div>
+                <h3 className="font-display text-xl text-russafa-pacific mb-3">{p.title}</h3>
+                <p className="text-russafa-gray text-sm leading-relaxed">{p.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────── SERVICIOS ADICIONALES ────────────────── */}
+      <section className="py-20 lg:py-24 bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+          <div className="text-center mb-14">
+            <h2 className="font-display-tight text-4xl lg:text-6xl text-russafa-pacific">
+              Servicios <span className="text-russafa-vibrant">Adicionales</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {ADDITIONAL_SERVICES.map((s) => (
+              <Link
+                key={s.slug}
+                href={`/servicios/${s.slug}`}
+                className="group block bg-russafa-cream rounded-3xl p-6 border border-russafa-pacific/8 hover:border-russafa-vibrant transition-colors"
+              >
+                <div className="mb-4">
+                  <RussafaIcon name={s.icon} size={88} />
+                </div>
+                <h3 className="font-display text-xl text-russafa-pacific mb-2">{s.title}</h3>
+                <p className="text-russafa-gray text-sm leading-relaxed mb-4">{s.text}</p>
+                <span className="inline-flex items-center gap-1 text-sm font-bold text-russafa-pacific group-hover:text-russafa-vibrant transition-colors">
+                  {s.cta} <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────── ZONAS LA SAFOR ────────────────── */}
+      <section id="zonas" className="py-20 lg:py-24 bg-russafa-cream">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+          <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-16 items-start">
             <div className="lg:sticky lg:top-32">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
                 Dónde llegamos
               </p>
-              <h2 className="font-display-tight text-5xl lg:text-6xl text-russafa-pacific mb-6">
+              <h2 className="font-display-tight text-4xl lg:text-5xl text-russafa-pacific mb-6">
                 Toda <span className="text-russafa-vibrant">La Safor</span> y mucho más.
               </h2>
-              <p className="text-russafa-gray leading-relaxed mb-8">
-                Cubrimos Gandia y todos los municipios de La Safor con la misma rapidez y trato. Y si te
-                mudas a Madrid, Barcelona o Berlín, también vamos.
+              <p className="text-russafa-gray leading-relaxed mb-6">
+                Realizamos mudanzas desde Gandia a otros municipios como Oliva, Daimús, Bellreguard,
+                Tavernes, Xeraco, Real de Gandia, Beniarjó, Miramar, Denia, Calpe… además de mudanzas
+                en Valencia y Castellón.
               </p>
               <a href={buildPhoneUrl()} className="btn-russafa btn-russafa-dark">
                 Llámanos {SITE.phone}
@@ -364,12 +453,10 @@ export default function Home() {
                 <Link
                   key={z.slug}
                   href={`/mudanzas-${z.slug}`}
-                  className="group flex items-center justify-between rounded-2xl border border-russafa-pacific/10 p-5 hover:border-russafa-vibrant hover:bg-russafa-vibrant/5 transition-all"
+                  className="group flex items-center justify-between rounded-2xl border border-russafa-pacific/10 bg-white p-5 hover:border-russafa-vibrant hover:bg-russafa-vibrant/5 transition-all"
                 >
                   <div>
-                    <h3 className="font-display text-xl text-russafa-pacific group-hover:text-russafa-pacific-deep">
-                      {z.name}
-                    </h3>
+                    <h3 className="font-display text-xl text-russafa-pacific">{z.name}</h3>
                     {z.distance && (
                       <p className="text-xs text-russafa-gray mt-1">{z.distance} de Gandia</p>
                     )}
@@ -387,115 +474,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ────────────────────────────── TESTIMONIOS ────────────────────────────── */}
-      <section className="py-24 lg:py-32 bg-russafa-cream">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
-                Lo que dicen
-              </p>
-              <h2 className="font-display-tight text-5xl lg:text-7xl text-russafa-pacific flex items-center gap-3">
-                <span className="text-russafa-yellow inline-flex items-center gap-2">
-                  <LassoStar className="w-12 h-12" /> 4.9
-                </span>{" "}
-                sobre 5
-              </h2>
-            </div>
-            <p className="text-russafa-gray max-w-md">
-              Más de 500 reseñas de clientes en Google, Facebook y boca a boca. Esto es lo que cuentan.
-            </p>
-          </div>
+      {/* ────────────────── ASOCIACIONES ────────────────── */}
+      <Associations />
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((t) => (
-              <article
-                key={t.name}
-                className="bg-white rounded-3xl p-8 border border-russafa-pacific/8 hover:border-russafa-vibrant transition-colors relative"
-              >
-                <div className="text-russafa-yellow mb-4 flex gap-0.5">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <LassoStar key={i} className="w-5 h-5" />
-                  ))}
-                </div>
-                <blockquote className="text-russafa-pacific leading-relaxed mb-6">
-                  &ldquo;{t.text}&rdquo;
-                </blockquote>
-                <footer className="flex items-center gap-3 pt-4 border-t border-russafa-pacific/8">
-                  <div className="w-10 h-10 rounded-full bg-russafa-vibrant flex items-center justify-center font-display text-russafa-pacific">
-                    {t.name[0]}
-                  </div>
-                  <div>
-                    <div className="font-bold text-russafa-pacific text-sm">{t.name}</div>
-                    <div className="text-xs text-russafa-gray">{t.location}</div>
-                  </div>
-                </footer>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ────────────────────────────── PRESUPUESTO ────────────────────────────── */}
-      <section
-        id="presupuesto"
-        className="py-24 lg:py-32 bg-russafa-pacific text-russafa-cream relative overflow-hidden bg-noise"
-      >
-        <div className="absolute inset-0 bg-grid-dark opacity-30" />
-        <div
-          aria-hidden="true"
-          className="absolute -left-32 -bottom-32 text-[30rem] leading-none font-display text-russafa-high/8 select-none pointer-events-none"
-        >
-          R
-        </div>
-
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-high mb-4">
-                Presupuesto sin compromiso
-              </p>
-              <h2 className="font-display-tight text-5xl lg:text-6xl mb-6">
-                Cuéntanos <span className="text-russafa-high">lo que necesitas</span> y te respondemos
-                en 24h.
-              </h2>
-              <p className="text-russafa-cream/70 leading-relaxed mb-8">
-                Rellena el formulario y te llamamos. Si lo prefieres, escríbenos por WhatsApp o llámanos
-                directamente.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={buildPhoneUrl()}
-                  className="btn-russafa btn-russafa-primary"
-                >
-                  {SITE.phone}
-                </a>
-                <a
-                  href={buildWhatsappUrl()}
-                  target="_blank"
-                  rel="noopener"
-                  className="btn-russafa btn-russafa-ghost"
-                >
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-
-            <div className="bg-russafa-cream rounded-3xl p-8 lg:p-10 shadow-2xl">
-              <BudgetForm />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ────────────────────────────── FAQ ────────────────────────────── */}
-      <section className="py-24 lg:py-32 bg-russafa-cream" id="faq">
+      {/* ────────────────── FAQ ────────────────── */}
+      <section className="py-20 lg:py-24 bg-russafa-cream" id="faq">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-14">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-russafa-vibrant mb-4">
               Preguntas frecuentes
             </p>
-            <h2 className="font-display-tight text-5xl lg:text-6xl text-russafa-pacific">
+            <h2 className="font-display-tight text-4xl lg:text-5xl text-russafa-pacific">
               Todo lo que <span className="text-russafa-vibrant">quieres saber.</span>
             </h2>
           </div>
@@ -507,7 +496,7 @@ export default function Home() {
                 className="group rounded-2xl border border-russafa-pacific/10 bg-white open:border-russafa-vibrant hover:border-russafa-pacific/20 transition-colors"
               >
                 <summary className="flex items-center justify-between gap-4 cursor-pointer list-none p-6">
-                  <h3 className="font-display text-xl text-russafa-pacific">{f.q}</h3>
+                  <h3 className="font-display text-lg text-russafa-pacific">{f.q}</h3>
                   <span
                     className="shrink-0 w-8 h-8 rounded-full bg-russafa-cream flex items-center justify-center text-russafa-pacific group-open:bg-russafa-vibrant group-open:rotate-45 transition-all font-display text-xl"
                     aria-hidden="true"
@@ -534,6 +523,46 @@ export default function Home() {
               }),
             }}
           />
+        </div>
+      </section>
+
+      {/* ────────────────── CIERRE / CTA ────────────────── */}
+      <section
+        id="contacto"
+        className="py-20 lg:py-24 bg-russafa-pacific text-russafa-cream relative overflow-hidden bg-noise"
+      >
+        <div className="absolute inset-0 bg-grid-dark opacity-30" />
+        <div
+          aria-hidden="true"
+          className="absolute -left-32 -bottom-32 lg:-left-20 w-[28rem] lg:w-[36rem] opacity-[0.08] pointer-events-none select-none"
+        >
+          <RussafaIsotype variant="withEyes" tone="high" size={576} decorative />
+        </div>
+        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-10 text-center">
+          <h2 className="font-display-tight text-4xl lg:text-6xl mb-6">
+            <span className="text-russafa-high">Tu tranquilidad</span> es nuestra meta.
+          </h2>
+          <p className="text-lg lg:text-xl text-russafa-cream/80 mb-10 max-w-2xl mx-auto">
+            Confía en nosotros, y haremos que todo sea más sencillo de lo que imaginas.
+            Llámanos o envíanos un mensaje, y nos encargaremos de que tu mudanza en Gandia
+            sea un éxito.
+          </p>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <a href={buildPhoneUrl()} className="btn-russafa btn-russafa-primary text-base">
+              {SITE.phone}
+            </a>
+            <a
+              href={buildWhatsappUrl()}
+              target="_blank"
+              rel="noopener"
+              className="btn-russafa btn-russafa-ghost"
+            >
+              WhatsApp
+            </a>
+          </div>
+          <p className="mt-8 text-sm text-russafa-cream/50">
+            {SITE.openingHoursText} · Sábados con cita previa
+          </p>
         </div>
       </section>
     </>

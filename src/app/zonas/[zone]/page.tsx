@@ -5,9 +5,22 @@ import { ZONES } from "@/data/zones";
 import { SERVICES } from "@/data/services";
 import { SITE, buildPhoneUrl, buildWhatsappUrl } from "@/lib/site-config";
 import BudgetForm from "@/components/BudgetForm";
-import { LassoLeg } from "@/components/RussafaIcons";
+import { RussafaIcon, type RussafaIconName } from "@/components/RussafaIcons";
 
 type Props = { params: Promise<{ zone: string }> };
+
+const SERVICE_ICONS: Record<string, RussafaIconName> = {
+  "mudanzas-particulares": "mudanzas-particulares",
+  "mudanzas-pequenas": "mudanzas-pequenas",
+  "mudanzas-oficinas": "mudanzas-oficinas",
+  "mudanzas-nacionales": "mudanzas-nacionales",
+  "mudanzas-internacionales": "mudanzas-nacionales",
+  guardamuebles: "guardamuebles",
+  "embalaje-de-contenidos": "embalaje",
+  "desmontaje-y-montaje": "desmontaje-montaje",
+  "elevador-montamuebles": "elevador-montamuebles",
+  "vaciado-de-viviendas": "vaciado-viviendas",
+};
 
 export async function generateStaticParams() {
   return ZONES.map((z) => ({ zone: z.slug }));
@@ -50,6 +63,9 @@ export default async function ZonePage({ params }: Props) {
         >
           R
         </div>
+        <div className="absolute right-10 bottom-10 hidden lg:block opacity-25">
+          <RussafaIcon name="mudanzas-particulares" size={240} />
+        </div>
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <nav className="text-xs text-russafa-cream/60 mb-8" aria-label="Breadcrumb">
@@ -90,10 +106,6 @@ export default async function ZonePage({ params }: Props) {
             >
               WhatsApp
             </a>
-          </div>
-
-          <div className="hidden lg:block absolute right-12 bottom-20 w-40 h-40 text-russafa-high/30">
-            <LassoLeg className="w-full h-full" />
           </div>
         </div>
       </section>
@@ -152,16 +164,22 @@ export default async function ZonePage({ params }: Props) {
             Servicios disponibles en {z.name}
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {SERVICES.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/servicios/${s.slug}`}
-                className="group bg-white rounded-2xl p-6 border border-russafa-pacific/10 hover:border-russafa-vibrant transition-colors"
-              >
-                <h3 className="font-display text-xl text-russafa-pacific mb-2">{s.shortTitle}</h3>
-                <p className="text-russafa-gray text-sm">{s.description}</p>
-              </Link>
-            ))}
+            {SERVICES.map((s) => {
+              const iconName = SERVICE_ICONS[s.slug] ?? "embalaje";
+              return (
+                <Link
+                  key={s.slug}
+                  href={`/servicios/${s.slug}`}
+                  className="group bg-white rounded-2xl p-6 border border-russafa-pacific/10 hover:border-russafa-vibrant transition-colors"
+                >
+                  <div className="mb-4">
+                    <RussafaIcon name={iconName} size={64} />
+                  </div>
+                  <h3 className="font-display text-xl text-russafa-pacific mb-2">{s.shortTitle}</h3>
+                  <p className="text-russafa-gray text-sm">{s.description}</p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

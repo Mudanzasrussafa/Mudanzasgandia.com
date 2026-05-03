@@ -4,23 +4,21 @@ import type { Metadata } from "next";
 import { SERVICES } from "@/data/services";
 import { SITE, buildPhoneUrl, buildWhatsappUrl } from "@/lib/site-config";
 import BudgetForm from "@/components/BudgetForm";
-import {
-  LassoTruck,
-  LassoBox,
-  LassoArm,
-  LassoShield,
-  LassoStair,
-} from "@/components/RussafaIcons";
+import { RussafaIcon, type RussafaIconName } from "@/components/RussafaIcons";
 
 type Props = { params: Promise<{ slug: string }> };
 
-const ICON_MAP: Record<string, typeof LassoTruck> = {
-  "mudanzas-locales": LassoTruck,
-  "mudanzas-nacionales": LassoTruck,
-  "mudanzas-internacionales": LassoTruck,
-  guardamuebles: LassoShield,
-  "mudanzas-oficinas": LassoArm,
-  embalaje: LassoBox,
+const ICON_MAP: Record<string, RussafaIconName> = {
+  "mudanzas-particulares": "mudanzas-particulares",
+  "mudanzas-pequenas": "mudanzas-pequenas",
+  "mudanzas-oficinas": "mudanzas-oficinas",
+  "mudanzas-nacionales": "mudanzas-nacionales",
+  "mudanzas-internacionales": "mudanzas-nacionales",
+  guardamuebles: "guardamuebles",
+  "embalaje-de-contenidos": "embalaje",
+  "desmontaje-y-montaje": "desmontaje-montaje",
+  "elevador-montamuebles": "elevador-montamuebles",
+  "vaciado-de-viviendas": "vaciado-viviendas",
 };
 
 export async function generateStaticParams() {
@@ -51,14 +49,14 @@ export default async function ServicePage({ params }: Props) {
   if (!service) notFound();
 
   const otherServices = SERVICES.filter((s) => s.slug !== slug).slice(0, 3);
-  const Icon = ICON_MAP[slug] ?? LassoBox;
+  const iconName = ICON_MAP[slug] ?? "embalaje";
 
   return (
     <>
       <section className="relative bg-russafa-pacific text-russafa-cream overflow-hidden bg-noise pt-20 pb-24 lg:pt-32 lg:pb-32">
         <div className="absolute inset-0 bg-grid-dark opacity-40" />
-        <div className="absolute -right-20 -top-10 w-80 h-80 text-russafa-high/8">
-          <Icon className="w-full h-full" />
+        <div className="absolute -right-10 top-10 lg:right-20 lg:top-20 opacity-30">
+          <RussafaIcon name={iconName} size={320} />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <nav className="text-xs text-russafa-cream/60 mb-8" aria-label="Breadcrumb">
@@ -148,18 +146,24 @@ export default async function ServicePage({ params }: Props) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <h2 className="font-display text-3xl text-russafa-pacific mb-8">Otros servicios</h2>
           <div className="grid sm:grid-cols-3 gap-4">
-            {otherServices.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/servicios/${s.slug}`}
-                className="group block bg-white rounded-2xl p-6 border border-russafa-pacific/10 hover:border-russafa-vibrant transition-colors"
-              >
-                <h3 className="font-display text-xl text-russafa-pacific group-hover:text-russafa-pacific-deep mb-2">
-                  {s.shortTitle}
-                </h3>
-                <p className="text-russafa-gray text-sm">{s.description}</p>
-              </Link>
-            ))}
+            {otherServices.map((s) => {
+              const otherIcon = ICON_MAP[s.slug] ?? "embalaje";
+              return (
+                <Link
+                  key={s.slug}
+                  href={`/servicios/${s.slug}`}
+                  className="group block bg-white rounded-2xl p-6 border border-russafa-pacific/10 hover:border-russafa-vibrant transition-colors"
+                >
+                  <div className="mb-4">
+                    <RussafaIcon name={otherIcon} size={64} />
+                  </div>
+                  <h3 className="font-display text-xl text-russafa-pacific group-hover:text-russafa-pacific-deep mb-2">
+                    {s.shortTitle}
+                  </h3>
+                  <p className="text-russafa-gray text-sm">{s.description}</p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

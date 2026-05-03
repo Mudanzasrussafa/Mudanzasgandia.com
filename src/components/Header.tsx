@@ -1,14 +1,8 @@
 import Link from "next/link";
 import BrandLogo from "./BrandLogo";
 import { SITE, buildPhoneUrl } from "@/lib/site-config";
-
-const NAV = [
-  { label: "Servicios", href: "/#servicios" },
-  { label: "Zonas", href: "/#zonas" },
-  { label: "Cómo trabajamos", href: "/#proceso" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contacto", href: "/#contacto" },
-];
+import { SERVICES } from "@/data/services";
+import { ZONES } from "@/data/zones";
 
 export default function Header() {
   return (
@@ -32,7 +26,7 @@ export default function Header() {
                   <span className="text-russafa-high">●</span> Seguro a todo riesgo incluido
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="text-russafa-high">●</span> Atendemos sábados
+                  <span className="text-russafa-high">●</span> +15 años de experiencia
                 </span>
               </div>
             ))}
@@ -41,31 +35,86 @@ export default function Header() {
       </div>
 
       {/* Header principal */}
-      <header className="sticky top-0 z-40 bg-russafa-cream/90 backdrop-blur-md border-b border-russafa-pacific/8">
+      <header className="sticky top-0 z-40 bg-russafa-cream/95 backdrop-blur-md border-b border-russafa-pacific/8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-          <div className="flex h-20 items-center justify-between">
+          <div className="flex h-20 items-center justify-between gap-6">
             <Link
               href="/"
-              className="text-base hover:opacity-80 transition-opacity"
+              className="text-base hover:opacity-80 transition-opacity shrink-0"
               aria-label="Inicio"
             >
-              <BrandLogo variant="full" color="pacific" />
+              <BrandLogo variant="full" tone="corporativo" width={150} />
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-8">
-              {NAV.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-sm font-semibold text-russafa-pacific hover:text-russafa-vibrant transition-colors relative group"
-                >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-russafa-vibrant group-hover:w-full transition-all duration-300" />
-                </Link>
-              ))}
+            {/* Navegación con menús desplegables */}
+            <nav className="hidden lg:flex items-center gap-7">
+              {/* Servicios */}
+              <div className="relative group">
+                <button className="text-sm font-semibold text-russafa-pacific hover:text-russafa-vibrant transition-colors flex items-center gap-1">
+                  Servicios
+                  <svg viewBox="0 0 12 12" className="w-3 h-3" fill="currentColor" aria-hidden="true">
+                    <path d="M6 9L2 4h8z" />
+                  </svg>
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 rounded-2xl bg-white shadow-2xl border border-russafa-pacific/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
+                  <div className="p-2">
+                    {SERVICES.map((s) => (
+                      <Link
+                        key={s.slug}
+                        href={`/servicios/${s.slug}`}
+                        className="block px-4 py-2.5 rounded-xl text-sm text-russafa-pacific hover:bg-russafa-cream hover:text-russafa-vibrant transition-colors"
+                      >
+                        {s.shortTitle}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Mudanzas Locales */}
+              <div className="relative group">
+                <button className="text-sm font-semibold text-russafa-pacific hover:text-russafa-vibrant transition-colors flex items-center gap-1">
+                  Mudanzas locales
+                  <svg viewBox="0 0 12 12" className="w-3 h-3" fill="currentColor" aria-hidden="true">
+                    <path d="M6 9L2 4h8z" />
+                  </svg>
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 rounded-2xl bg-white shadow-2xl border border-russafa-pacific/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden">
+                  <div className="p-2">
+                    {ZONES.map((z) => (
+                      <Link
+                        key={z.slug}
+                        href={`/mudanzas-${z.slug}`}
+                        className="block px-4 py-2.5 rounded-xl text-sm text-russafa-pacific hover:bg-russafa-cream hover:text-russafa-vibrant transition-colors"
+                      >
+                        Mudanzas {z.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <Link
+                href="/#zonas"
+                className="text-sm font-semibold text-russafa-pacific hover:text-russafa-vibrant transition-colors"
+              >
+                Zonas
+              </Link>
+              <Link
+                href="/#proceso"
+                className="text-sm font-semibold text-russafa-pacific hover:text-russafa-vibrant transition-colors"
+              >
+                Cómo trabajamos
+              </Link>
+              <Link
+                href="/#contacto"
+                className="text-sm font-semibold text-russafa-pacific hover:text-russafa-vibrant transition-colors"
+              >
+                Contacto
+              </Link>
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 shrink-0">
               <a
                 href={buildPhoneUrl()}
                 className="hidden md:flex flex-col items-end leading-tight hover:opacity-80 transition-opacity"
@@ -76,10 +125,10 @@ export default function Header() {
                 <span className="text-russafa-pacific font-bold">{SITE.phone}</span>
               </a>
               <Link
-                href="/#presupuesto"
+                href="/#contacto"
                 className="btn-russafa btn-russafa-primary text-sm"
               >
-                Presupuesto gratis
+                Presupuesto
                 <span aria-hidden="true">→</span>
               </Link>
             </div>
