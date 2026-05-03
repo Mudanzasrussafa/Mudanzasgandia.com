@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BrandLogo from "./BrandLogo";
+import MobileMenu from "./MobileMenu";
 import { SITE, buildPhoneUrl } from "@/lib/site-config";
 import { SERVICES } from "@/data/services";
 import { ZONES } from "@/data/zones";
@@ -126,11 +127,12 @@ export default function Header() {
               </a>
               <Link
                 href="/#contacto"
-                className="btn-russafa btn-russafa-primary text-sm"
+                className="btn-russafa btn-russafa-primary text-sm hidden md:inline-flex"
               >
                 Presupuesto
                 <span aria-hidden="true">→</span>
               </Link>
+              <MobileMenu />
             </div>
           </div>
         </div>
