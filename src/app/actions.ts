@@ -1,17 +1,6 @@
 "use server";
 
-/**
- * Server action que recibe los datos del formulario de presupuesto.
- *
- * IMPORTANTE: este es un placeholder. Para que funcione realmente,
- * conéctalo a uno de estos servicios (recomiendo Resend por simplicidad):
- *
- * 1. RESEND (recomendado) — añade RESEND_API_KEY en .env y descomenta el bloque
- * 2. WEBHOOK (Zapier / Make) — pon la URL en BUDGET_WEBHOOK_URL
- * 3. FORMSPREE — sustituye este action por POST directo a Formspree
- *
- * Por ahora solo registra en consola y devuelve éxito para que la UI funcione.
- */
+import { Resend } from "resend";
 
 export type BudgetFormState =
   | { status: "idle" }
@@ -41,35 +30,67 @@ export async function submitBudgetRequest(
     };
   }
 
-  // ────────────────────────────────────────────────────────────
-  // OPCIÓN 1 — RESEND (recomendado)
-  // npm install resend
-  // ────────────────────────────────────────────────────────────
-  // import { Resend } from "resend";
-  // const resend = new Resend(process.env.RESEND_API_KEY);
-  // await resend.emails.send({
-  //   from: "web@mudanzasgandia.com",
-  //   to: "info@mudanzasgandia.com",
-  //   subject: `Nueva solicitud de presupuesto — ${data.name}`,
-  //   text: JSON.stringify(data, null, 2),
-  // });
+  // Verificar que las variables de entorno están configuradas
+  const apiKey = process.env.RESEND_API_KEY;
+  const emailDestino = process.env.EMAIL_DESTINO;
 
-  // ────────────────────────────────────────────────────────────
-  // OPCIÓN 2 — WEBHOOK (Zapier, Make, n8n…)
-  // ────────────────────────────────────────────────────────────
-  // if (process.env.BUDGET_WEBHOOK_URL) {
-  //   await fetch(process.env.BUDGET_WEBHOOK_URL, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data),
-  //   });
-  // }
+  if (!apiKey || !emailDestino) {
+    console.error("[presupuesto] Faltan variables de entorno RESEND_API_KEY o EMAIL_DESTINO");
+    return {
+      status: "error",
+      message: "Error de configuración del servidor. Por favor, llámanos al 603 280 171.",
+    };
+  }
 
-  // De momento solo log en servidor — para verificar conexión
-  console.log("[presupuesto] solicitud recibida:", data);
+  try {
+    const resend = new Resend(apiKey);
 
-  return {
-    status: "success",
-    message: "Hemos recibido tu solicitud. Te llamamos en menos de 24h.",
-  };
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background-color: #02403D; color: #E7E3D0; padding: 20px; border-radius: 8px 8px 0 0;">
+          <h1 style="margin: 0; color: #6BCE42;">Nueva solicitud de presupuesto</h1>
+          <p style="margin: 8px 0 0 0; color: #E7E3D0;">mudanzasgandia.com</p>
+        </div>
+        <div style="background-color: #f9f9f9; padding: 20px; border-radius: 0 0 8px 8px; border: 1px solid #ddd;">
+          <h2 style="color: #02403D; margin-top: 0;">Datos del cliente</h2>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 8px 0; font-weight: bold; width: 140px;">Nombre:</td><td style="padding: 8px 0;">${data.name}</td></tr>
+            <tr><td style="padding: 8px 0; font-weight: bold;">Teléfono:</td><td style="padding: 8px 0;"><a href="tel:${data.phone}" style="color: #02403D;">${data.phone}</a></td></tr>
+            <tr><td style="padding: 8px 0; font-weight: bold;">Email:</td><td style="padding: 8px 0;">${data.email || "<em>no facilitado</em>"}</td></tr>
+          </table>
+          <h2 style="color: #02403D; margin-top: 24px;">Detalles de la mudanza</h2>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 8px 0; font-weight: bold; width: 140px;">Desde:</td><td style="padding: 8px 0;">${data.origin || "<em>no indicado</em>"}</td></tr>
+            <tr><td style="padding: 8px 0; font-weight: bold;">Hasta:</td><td style="padding: 8px 0;">${data.destination || "<em>no indicado</em>"}</td></tr>
+            <tr><td style="padding: 8px 0; font-weight: bold;">Fecha aprox:</td><td style="padding: 8px 0;">${data.date || "<em>flexible</em>"}</td></tr>
+            <tr><td style="padding: 8px 0; font-weight: bold;">Tipo:</td><td style="padding: 8px 0;">${data.type || "<em>no indicado</em>"}</td></tr>
+          </table>
+          ${data.notes ? `<h2 style="color: #02403D; margin-top: 24px;">Comentarios</h2><p style="background: white; padding: 12px; border-radius: 4px; border-left: 4px solid #6BCE42;">${data.notes}</p>` : ""}
+          <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 13px;">
+            <p>Lead recibido desde <strong>mudanzasgandia.com</strong></p>
+            <p>Recuerda responder en menos de 24h para mantener la promesa de la web.</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    await resend.emails.send({
+      from: "Mudanzas Gandia <onboarding@resend.dev>",
+      to: emailDestino,
+      replyTo: data.email || undefined,
+      subject: `Nueva solicitud de presupuesto — ${data.name}`,
+      html: emailHtml,
+    });
+
+    return {
+      status: "success",
+      message: "Hemos recibido tu solicitud. Te llamamos en menos de 24h.",
+    };
+  } catch (error) {
+    console.error("[presupuesto] Error al enviar email:", error);
+    return {
+      status: "error",
+      message: "No hemos podido enviar tu solicitud. Por favor, llámanos al 603 280 171.",
+    };
+  }
 }
