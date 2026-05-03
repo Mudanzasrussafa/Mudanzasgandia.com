@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { SITE, buildPhoneUrl, buildWhatsAppUrl } from "@/lib/site-config";
+import { SITE, buildPhoneUrl, buildWhatsappUrl } from "@/lib/site-config";
 import { SERVICES } from "@/data/services";
 import { ZONES } from "@/data/zones";
 
@@ -201,7 +201,7 @@ export default function MobileMenu() {
               Llamar
             </a>
             <a
-              href={buildWhatsAppUrl()}
+              href={buildWhatsappUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 py-3 rounded-xl bg-russafa-vibrant text-russafa-pacific font-semibold text-sm hover:bg-russafa-vibrant/90 transition-colors"
